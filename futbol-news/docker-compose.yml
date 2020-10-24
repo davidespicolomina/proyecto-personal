@@ -80,6 +80,8 @@ services:
       placement:
         constraints:
           - node.labels.${STACK_NAME?Variable not set}.app-db-data == true
+    ports:
+      - 6543:5432
 
   pgadmin:
     image: dpage/pgadmin4
