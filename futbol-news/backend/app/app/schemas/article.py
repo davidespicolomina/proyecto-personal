@@ -38,6 +38,6 @@ class Article(ArticleInDBBase):
     pass
 
 
-# Properties properties stored in DB
+# Properties stored in DB
 class ArticleInDB(ArticleInDBBase):
     pass

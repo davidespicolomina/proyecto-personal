@@ -1,4 +1,5 @@
-from sqlalchemy import Boolean, Column, Integer, String, Text, Date
+from sqlalchemy import Boolean, Column, Integer, String, Text, Date, DateTime
+from sqlalchemy.sql import func
 
 from app.db.base_class import Base
 
@@ -14,4 +15,10 @@ class Article(Base):
         nullable=False,
         comment="Se puede poner el principio del texto aquí, por si no se quiere abrir la url",
     )
-    last_updated = Column(Date, nullable=False, comment="Fecha de última actualización")
+    last_updated = Column(
+        DateTime(timezone=True),
+        server_default=func.now(),
+        onupdate=func.now(),
+        nullable=False,
+        comment="Fecha de última actualización",
+    )
