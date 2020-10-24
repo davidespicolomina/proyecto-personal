@@ -1,8 +1,8 @@
-"""Crear tabla artículos
+"""Crear tabla articulos
 
-Revision ID: 0defeb91bf46
+Revision ID: 3a6b701a14d3
 Revises: d4867f3a4c0a
-Create Date: 2020-10-24 09:03:14.961574
+Create Date: 2020-10-24 16:39:23.560030
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0defeb91bf46'
+revision = '3a6b701a14d3'
 down_revision = 'd4867f3a4c0a'
 branch_labels = None
 depends_on = None
@@ -21,6 +21,7 @@ def upgrade():
     op.drop_index('ix_articulo_id', table_name='articulo')
     op.drop_index('ix_articulo_url', table_name='articulo')
     op.drop_table('articulo')
+    op.add_column('article', sa.Column('last_updated', sa.Date(), nullable=False, comment='Fecha de última '))
     op.alter_column('user', 'email',
                existing_type=sa.VARCHAR(),
                nullable=False)
@@ -38,6 +39,7 @@ def downgrade():
     op.alter_column('user', 'email',
                existing_type=sa.VARCHAR(),
                nullable=True)
+    op.drop_column('article', 'last_updated')
     op.create_table('articulo',
     sa.Column('id', sa.INTEGER(), autoincrement=True, nullable=False),
     sa.Column('origen', sa.VARCHAR(), autoincrement=False, nullable=False, comment='De qué web viene el artículo'),

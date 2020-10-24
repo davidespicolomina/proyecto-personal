@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional
 
 from pydantic import BaseModel
@@ -26,6 +27,7 @@ class ArticleUpdate(ArticleBase):
 # Properties shared by models stored in DB
 class ArticleInDBBase(ArticleBase):
     id: int
+    last_update: date
 
     class Config:
         orm_mode = True
