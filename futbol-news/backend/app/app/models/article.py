@@ -13,7 +13,7 @@ class Article(Base):
     summary = Column(
         Text,
         nullable=False,
-        comment="Se puede poner el principio del texto aquí, por si no se quiere abrir la url",
+        comment="Se puede poner un resumen del texto aquí, por si no se quiere abrir la url",
     )
     last_updated = Column(
         DateTime(timezone=True),
