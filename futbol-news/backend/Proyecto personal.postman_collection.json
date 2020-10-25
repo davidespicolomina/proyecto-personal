@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "715fcce2-fb86-4637-ba8a-bc564a9199b0",
+		"name": "Proyecto personal",
+		"description": "Requests de prueba para mi proyecto personal.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Search terms",
+			"item": [
+				{
+					"name": "Get Search terms list",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/v1/search-terms/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"search-terms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Search terms detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost/api/v1/search-terms/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"search-terms",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search terms create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"term\": \"Adama\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/v1/search-terms/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"search-terms",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search terms update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"term\": \"Adama Traoré\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/v1/search-terms/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"search-terms",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search terms delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"term\": \"Adama Traoré\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost/api/v1/search-terms/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"path": [
+								"api",
+								"v1",
+								"search-terms",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Management update",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost/api/v1/management/update/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"api",
+						"v1",
+						"management",
+						"update",
+						""
+					]
+				},
+				"description": "Lanza el update de la base de datos leyendo las noticias de las webs."
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
