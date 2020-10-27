@@ -11,24 +11,18 @@ router = APIRouter()
 
 @router.get("/", response_model=List[schemas.SearchTerm])
 def read_search_terms(
-    db: Session = Depends(deps.get_db),
-    skip: int = 0,
-    limit: int = 100,
+    db: Session = Depends(deps.get_db), skip: int = 0, limit: int = 100
 ) -> Any:
     """
     Retrieve search terms.
     """
-    search_terms = crud.search_term.get_multi(
-        db=db, skip=skip, limit=limit
-    )
+    search_terms = crud.search_term.get_multi(db=db, skip=skip, limit=limit)
     return search_terms
 
 
 @router.post("/", response_model=schemas.SearchTerm)
 def create_search_term(
-    *,
-    db: Session = Depends(deps.get_db),
-    search_term_in: schemas.SearchTermCreate,
+    *, db: Session = Depends(deps.get_db), search_term_in: schemas.SearchTermCreate
 ) -> Any:
     """
     Create new search term.
@@ -52,16 +46,17 @@ def update_search_term(
     search_term = crud.search_term.get(db=db, id=id)
     if not search_term:
         raise HTTPException(status_code=404, detail="Search term not found")
-    search_term = crud.search_term.update(db=db, db_obj=search_term, obj_in=search_term_in)
+    existing_by_term = crud.search_term.get_by_term(db=db, term=search_term_in.term)
+    if existing_by_term and existing_by_term.id != id:
+        raise HTTPException(status_code=404, detail="Already existing search term")
+    search_term = crud.search_term.update(
+        db=db, db_obj=search_term, obj_in=search_term_in
+    )
     return search_term
 
 
 @router.get("/{id}", response_model=schemas.SearchTerm)
-def read_search_term(
-    *,
-    db: Session = Depends(deps.get_db),
-    id: int,
-) -> Any:
+def read_search_term(*, db: Session = Depends(deps.get_db), id: int) -> Any:
     """
     Get search term by ID.
     """
@@ -72,11 +67,7 @@ def read_search_term(
 
 
 @router.delete("/{id}", response_model=schemas.SearchTerm)
-def delete_search_term(
-    *,
-    db: Session = Depends(deps.get_db),
-    id: int,
-) -> Any:
+def delete_search_term(*, db: Session = Depends(deps.get_db), id: int) -> Any:
     """
     Delete a search term.
     """

@@ -9,10 +9,13 @@ from app.schemas.search_term import SearchTermCreate, SearchTermUpdate
 
 class CRUDSearchTerm(CRUDBase[SearchTerm, SearchTermCreate, SearchTermUpdate]):
     def create(self, db: Session, *, obj_in: SearchTermCreate) -> Optional[SearchTerm]:
-        existing = db.query(self.model).filter(self.model.term == obj_in.term).first()
+        existing = self.get_by_term(db=db, term=obj_in.term)
         if existing:
             return None
         return super().create(db=db, obj_in=obj_in)
+
+    def get_by_term(self, db: Session, term: str) -> Optional[SearchTerm]:
+        return db.query(self.model).filter(self.model.term == term).first()
 
 
 search_term = CRUDSearchTerm(SearchTerm)
