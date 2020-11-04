@@ -1,3 +1,5 @@
+from contextlib import contextmanager
+from functools import wraps
 from typing import Generator
 
 from fastapi import Depends, HTTPException, status
@@ -59,3 +61,21 @@ def get_current_active_superuser(
             status_code=400, detail="The user doesn't have enough privileges"
         )
     return current_user
+
+
+@contextmanager
+def new_database_session():
+    try:
+        db = SessionLocal()
+        yield db
+    finally:
+        db.close()
+
+
+def with_transaction(func):
+    @wraps(func)
+    def internal(*args, **kwargs):
+        with new_database_session() as session:
+            return func(*args, db_session=session, **kwargs)
+
+    return internal

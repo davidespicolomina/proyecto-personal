@@ -1,12 +1,22 @@
+import logging
 import scrapy
+from app.api.api_v1.endpoints.search_terms import create_search_term
+from app.api.deps import with_transaction
+from app.schemas import SearchTermCreate
+
+logger = logging.getLogger(__name__)
 
 
 class MarcaSpider(scrapy.Spider):
     name = "quotes"
     start_urls = ["http://quotes.toscrape.com/page/1/"]
 
-    def parse(self, response, **kwargs):
-        print("parsing!")
+    @with_transaction
+    def parse(self, response, db_session, **kwargs):
+        logger.warning("Spider parse")
+        create_search_term(
+            db=db_session, search_term_in=SearchTermCreate(term="prueba!!!")
+        )
         for quote in response.css("div.quote"):
             print(f"text -> {quote.css('span.text::text').get()}")
             yield {
