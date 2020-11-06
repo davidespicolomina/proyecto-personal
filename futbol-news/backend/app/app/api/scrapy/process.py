@@ -25,6 +25,7 @@ class CrawlerProcess(Process):
 
 def crawl_news():
     logger.info("Crawl news")
+    # cargar los search terms aquí y pasarlos al spider __init__
     spider = MarcaSpider()
     crawler = CrawlerProcess(spider)
     crawler.start()
