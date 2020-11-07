@@ -1,5 +1,4 @@
 from datetime import date
-from typing import Optional
 
 from pydantic import BaseModel
 
@@ -9,7 +8,6 @@ class ArticleBase(BaseModel):
     source: str
     title: str
     url: str
-    description: Optional[str] = None
     favorite: bool = True
     summary: str
 

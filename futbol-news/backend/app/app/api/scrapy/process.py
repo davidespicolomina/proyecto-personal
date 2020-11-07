@@ -1,6 +1,9 @@
 import logging
+from typing import List
 
+from app.api.deps import with_transaction
 from app.api.scrapy.spiders.marca import MarcaSpider
+from app.crud import search_term
 from billiard.context import Process
 from scrapy import signals
 from scrapy.crawler import Crawler
@@ -24,8 +27,7 @@ class CrawlerProcess(Process):
 
 
 def crawl_news():
-    logger.info("Crawl news")
-    # cargar los search terms aquí y pasarlos al spider __init__
+    logger.info(f"Crawl news")
     spider = MarcaSpider()
     crawler = CrawlerProcess(spider)
     crawler.start()
