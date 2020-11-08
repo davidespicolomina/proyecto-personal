@@ -28,7 +28,11 @@ class MarcaSpider(BaseSpider):
         for web_article in response.css("article"):
             for row in web_article.css("div.row.content"):
                 for paragraph in row.css("p"):
-                    summary.append(str(paragraph.css("*::text").get()))
+                    text = ""
+                    for p_text in paragraph.css("*::text").getall():
+                        if len(p_text) > 0:
+                            text += p_text
+                    summary.append(text)
 
         article_info.summary = "\n".join(
             [string for string in summary if len(string) > 1]
@@ -41,12 +45,13 @@ class MarcaSpider(BaseSpider):
 
     @with_transaction
     def parse(self, response, db_session, **kwargs):
-        search_terms = self.get_search_terms_list(db_session)
+        search_terms: List[str] = self.get_search_terms_list(db_session)
         logger.info(f"Marca spider para buscar {search_terms}")
         for web_article in response.css("article"):
             title: str = str(web_article.css("a::text").get())
             url: str = str(web_article.css("a::attr(href)").get())
-            if any(search_term in title for search_term in search_terms):
+            to_compare: str = title.upper()
+            if any(search_term in to_compare for search_term in search_terms):
                 article_info = ArticleCreate(
                     source=self.get_source_name(),
                     title=title,
