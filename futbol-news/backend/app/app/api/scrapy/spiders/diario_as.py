@@ -10,22 +10,22 @@ from app.schemas import ArticleCreate
 logger = logging.getLogger(__name__)
 
 
-class ElMundoSpider(BaseSpider):
-    name = "elmundo"
+class AsSpider(BaseSpider):
+    name = "as"
     start_urls = [
-        "https://www.elmundo.es/deportes/futbol.html?intcmp=MENUMIGA01&s_kw=futbol",
-        "https://www.elmundo.es/deportes/futbol/primera-division.html?intcmp=MENUMIGA01&s_kw=primera-division",
-        "https://www.elmundo.es/deportes/futbol/segunda-division.html?intcmp=MENUMIGA01&s_kw=segunda-division",
-        "https://www.elmundo.es/deportes/futbol/segunda-division-b.html?intcmp=MENUMIGA01&s_kw=segunda-division-b",
+        "https://as.com/futbol/?omnil=mpal",
+        "https://as.com/futbol/primera.html",
+        "https://as.com/futbol/segunda.html",
+        "https://as.com/tag/segunda_division_b/a/",
     ]
 
     def get_source_name(self) -> str:
-        return "el mundo"
+        return "as"
 
     def get_article_summary(self, response, article_info: ArticleCreate, db_session):
         summary: List[str] = []
         # sólo los p de la primera row content
-        for web_article in response.css("article"):
+        for web_article in response.css("div.int-articulo"):
             for paragraph in web_article.css("p"):
                 text = ""
                 for p_text in paragraph.css("*::text").getall():
@@ -38,21 +38,17 @@ class ElMundoSpider(BaseSpider):
         )
         if article_info.summary is None or len(article_info.summary) == 0:
             article_info.summary = "No disponible"
-        logger.info(f"Procesado artículo {article_info}")
-        article.update_or_create(db=db_session, obj_in=article_info)
+        else:
+            logger.info(f"Procesado artículo {article_info}")
+            article.update_or_create(db=db_session, obj_in=article_info)
         yield article_info.dict()
 
     @with_transaction
     def parse(self, response, db_session, **kwargs):
         search_terms: List[str] = self.get_search_terms_list(db_session)
-        logger.info(f"El mundo spider para buscar {search_terms}")
+        logger.info(f"AS spider para buscar {search_terms}")
         for web_article in response.css("article"):
-            title: str = ""
-            for a in web_article.css("a"):
-                for text in a.css("*::text").getall():
-                    if len(text) > 0:
-                        title += text
-                break
+            title: str = str(web_article.css("a::text").get())
             url: str = str(web_article.css("a::attr(href)").get())
             to_compare: str = title.upper()
             if any(search_term in to_compare for search_term in search_terms):
