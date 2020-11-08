@@ -2,6 +2,7 @@ import logging
 from typing import List
 
 from app.api.deps import with_transaction
+from app.api.scrapy.spiders.el_mundo import ElMundoSpider
 from app.api.scrapy.spiders.marca import MarcaSpider
 from app.crud import search_term
 from billiard.context import Process
@@ -28,7 +29,11 @@ class CrawlerProcess(Process):
 
 def crawl_news():
     logger.info(f"Crawl news")
-    spider = MarcaSpider()
-    crawler = CrawlerProcess(spider)
-    crawler.start()
-    crawler.join()
+    spiders = [MarcaSpider(), ElMundoSpider()]
+    crawlers = []
+    for spider in spiders:
+        crawlers.append(CrawlerProcess(spider))
+    for crawler in crawlers:
+        crawler.start()
+    for crawler in crawlers:
+        crawler.join()
