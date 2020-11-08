@@ -1,5 +1,6 @@
-from typing import Optional
+from typing import Optional, List
 
+from sqlalchemy import func, or_
 from sqlalchemy.orm import Session
 
 from app.crud.base import CRUDBase
@@ -19,6 +20,22 @@ class CRUDArticle(CRUDBase[Article, ArticleCreate, ArticleUpdate]):
 
     def get_by_url(self, db: Session, url: str) -> Optional[Article]:
         return db.query(self.model).filter(self.model.url == url).first()
+
+    def get_articles(
+        self, db: Session, *, skip: int = 0, limit: int = 100, filter: str
+    ) -> List[Article]:
+        queryset = db.query(self.model)
+        if filter:
+            filter = "%" + filter + "%"
+            queryset = queryset.filter(
+                or_(Article.title.ilike(filter), Article.summary.ilike(filter))
+            )
+        return (
+            queryset.order_by(Article.last_updated.desc(), Article.id.desc())
+            .offset(skip)
+            .limit(limit)
+            .all()
+        )
 
 
 article = CRUDArticle(Article)

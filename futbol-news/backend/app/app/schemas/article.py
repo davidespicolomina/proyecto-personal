@@ -25,7 +25,7 @@ class ArticleUpdate(ArticleBase):
 # Properties shared by models stored in DB
 class ArticleInDBBase(ArticleBase):
     id: int
-    last_update: date
+    last_updated: date
 
     class Config:
         orm_mode = True
