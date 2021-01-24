@@ -1,18 +1,39 @@
-import React, {Component} from "react";
+import React, {Component, Fragment} from "react";
 import 'bulma/css/bulma.css'
 import PageTitle from "./common/PageTitle";
+import SearchTermsService from "../services/SearchTermsService";
+import SearchTermList from "./SearchTermList";
 
-class Springs extends Component {
+class ConfigPage extends Component {
     constructor(props) {
         super(props);
+        this.searchTermsService = new SearchTermsService();
+        this.state = {
+            searchTerms: null,
+        }
     }
 
+    async componentDidMount() {
+        await this.retrieveSearchTerms();
+    }
+
+    retrieveSearchTerms = async () => {
+        const searchTerms = await this.searchTermsService.getAll();
+        console.log(searchTerms);
+        this.setState({ searchTerms });
+    }
 
     render() {
+        if (!this.state.searchTerms) {
+            return null;
+        }
         return (
-            <PageTitle title={"Configuración"} />
+            <Fragment>
+                <PageTitle title={"Configuración"} />
+                <SearchTermList data={this.state.searchTerms} />
+            </Fragment>
         )
     }
 }
 
-export default Springs;
+export default ConfigPage;
