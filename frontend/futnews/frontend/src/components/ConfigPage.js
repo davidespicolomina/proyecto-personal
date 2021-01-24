@@ -30,7 +30,7 @@ class ConfigPage extends Component {
         return (
             <Fragment>
                 <PageTitle title={"Configuración"} />
-                <SearchTermList data={this.state.searchTerms} />
+                <SearchTermList data={this.state.searchTerms} retrieveSearchTerms={this.retrieveSearchTerms}/>
             </Fragment>
         )
     }

@@ -2,7 +2,6 @@ import React, {Component, Fragment} from "react";
 import Menu from "./Menu";
 import ConfigPage from "./ConfigPage";
 import ArticlesService from "../services/ArticlesService";
-import SearchTermsService from "../services/SearchTermsService";
 import ArticlesPage from "./ArticlesPage";
 
 class App extends Component {
@@ -12,7 +11,6 @@ class App extends Component {
             selectedMenu: "articles",
         }
         this.articlesService = new ArticlesService();
-        this.searchTermsService = new SearchTermsService();
     }
 
     onMenuClick = (menuName) => {

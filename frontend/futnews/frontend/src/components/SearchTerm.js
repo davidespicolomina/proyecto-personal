@@ -8,9 +8,11 @@ class SearchTerm extends Component {
         }
         //TODO: add delete
         return (
-            <div className="tags has-addons">
-                <span className="tag is-danger">{this.props.data.term}</span>
-                <a className="tag is-delete"> </a>
+            <div className="control">
+                <div className="tags has-addons">
+                    <span className="tag is-danger">{this.props.data.term}</span>
+                    <a className="tag is-delete"> </a>
+                </div>
             </div>
         )
     }

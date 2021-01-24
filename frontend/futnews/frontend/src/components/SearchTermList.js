@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from "react";
 import 'bulma/css/bulma.css'
 import SearchTerm from "./SearchTerm";
+import AddSearchTermForm from "./AddSearchTermForm";
 
 class SearchTermsList extends Component {
 
@@ -10,17 +11,27 @@ class SearchTermsList extends Component {
         );
     }
 
+    handleChange = (event) => {
+        let hasChanged = false;
+        if (this.state.numericValue.toString() !== event.target.value) {
+            hasChanged = true;
+        }
+        this.setState({numericValue: event.target.value, hasChanged: hasChanged});
+    }
+
+
     render() {
-        if (!this.props.searchTerms) {
+        if (!this.props.data) {
             return null;
         }
         return (
-            <Fragment>
-                <h1 className="title is-2">Términos de búsqueda</h1>
-                <div className="tags">
+            <section className="section">
+                <h1 className="title is-3">Términos de búsqueda</h1>
+                <div className="field is-grouped is-grouped-multiline">
                     {this.renderSearchTerms()}
                 </div>
-            </Fragment>
+                <AddSearchTermForm retrieveSearchTerms={this.props.retrieveSearchTerms} />
+            </section>
         )
     }
 }
