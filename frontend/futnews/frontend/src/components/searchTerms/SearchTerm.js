@@ -19,7 +19,6 @@ class SearchTerm extends Component {
         if (!this.props.data) {
             return null;
         }
-        //TODO: add delete
         return (
             <div className="control">
                 <div className="tags has-addons">

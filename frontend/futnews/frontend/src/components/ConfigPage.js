@@ -3,6 +3,7 @@ import 'bulma/css/bulma.css'
 import PageTitle from "./common/PageTitle";
 import SearchTermsService from "../services/SearchTermsService";
 import SearchTermList from "./searchTerms/SearchTermList";
+import Update from "./searchTerms/Update";
 
 class ConfigPage extends Component {
     constructor(props) {
@@ -31,6 +32,7 @@ class ConfigPage extends Component {
             <Fragment>
                 <PageTitle title={"Configuración"} />
                 <SearchTermList data={this.state.searchTerms} retrieveSearchTerms={this.retrieveSearchTerms}/>
+                <Update />
             </Fragment>
         )
     }
