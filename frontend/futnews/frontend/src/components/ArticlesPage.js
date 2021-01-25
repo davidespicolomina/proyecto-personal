@@ -14,11 +14,12 @@ class ArticlesPage extends Component {
     }
 
     async componentDidMount() {
-        await this.retrieveArticles(null);
+        await this.retrieveArticles(0, null);
     }
 
-    retrieveArticles = async (filter) => {
-        const articles = await this.articlesService.getAllFiltered(filter);
+    retrieveArticles = async (page, filter) => {
+        const articles = await this.articlesService.getAllFiltered(page, filter);
+        console.log("page", page);
         console.log("filter", filter);
         console.log(articles);
         this.setState({ articles });

@@ -9,7 +9,9 @@ class ArticleFilter extends Component {
         super(props);
         this.state = {
             filter: "",
+            page: props.data.page,
         };
+        this.totalPages = Math.ceil(props.total / props.size);
     }
 
     handleChange = (event) => {
@@ -24,6 +26,9 @@ class ArticleFilter extends Component {
         return (
             <div className="field is-horizontal">
                 <div className="field-body">
+                    <div className="field-label is-normal">
+                        <label className="label">{this.props.data.total} artículos</label>
+                    </div>
                     <div className="field">
                         <p className="control">
                             <input className="input" type="text" placeholder="Filtrar título o contenido" onChange={this.handleChange} />

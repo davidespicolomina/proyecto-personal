@@ -1,6 +1,8 @@
 from typing import Any, List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi_pagination import Page, pagination_params
+from fastapi_pagination.paginator import paginate
 from sqlalchemy.orm import Session
 
 from app import crud, schemas
@@ -9,21 +11,19 @@ from app.api import deps
 router = APIRouter()
 
 
-@router.get("/", response_model=List[schemas.Article])
+@router.get("/", response_model=Page[schemas.Article], dependencies=[Depends(pagination_params)])
 def read_articles(
     filter: Optional[str] = None,
     db: Session = Depends(deps.get_db),
-    skip: int = 0,
-    limit: int = 100,
 ) -> Any:
     """
     Retrieve articles.
     """
     search_terms = crud.article.get_articles(
-        db=db, skip=skip, limit=limit, filter=filter
+        db=db, filter=filter
     )
 
-    return search_terms
+    return paginate(search_terms)
 
 
 @router.get("/{id}", response_model=schemas.Article)

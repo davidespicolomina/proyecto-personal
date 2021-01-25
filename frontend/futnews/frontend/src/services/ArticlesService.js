@@ -7,13 +7,17 @@ class ArticlesService extends BaseService {
         return "http://localhost/api/v1/articles/";
     }
 
-    async getAllFiltered(filter) {
+    async getAllFiltered(page, filter) {
         const url = this.listUrl();
-        let params = {
-            filter: filter
+        if (!page) {
+            page = 0
         }
-        if (!filter) {
-            params = {}
+        let params = {
+            page: page,
+            size: 20,
+        }
+        if (filter) {
+            params.filter = filter;
         }
         const response =  await axios.get(url, { params: params});
         return response.data;

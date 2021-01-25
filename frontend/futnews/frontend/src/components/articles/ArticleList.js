@@ -6,7 +6,7 @@ import ArticleFilter from "./ArticleFilter";
 class ArticleList extends Component {
 
     renderArticles = () => {
-        return this.props.data.map(article =>
+        return this.props.data.items.map(article =>
             <Article key={article.id} data={article} />
         );
     }
@@ -26,7 +26,7 @@ class ArticleList extends Component {
         }
         return (
             <section className="section">
-                <ArticleFilter retrieveArticles={this.props.retrieveArticles} />
+                <ArticleFilter retrieveArticles={this.props.retrieveArticles} data={this.props.data} />
                 {this.renderArticles()}
             </section>
         )

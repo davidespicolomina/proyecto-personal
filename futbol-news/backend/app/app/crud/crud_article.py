@@ -22,7 +22,7 @@ class CRUDArticle(CRUDBase[Article, ArticleCreate, ArticleUpdate]):
         return db.query(self.model).filter(self.model.url == url).first()
 
     def get_articles(
-        self, db: Session, *, skip: int = 0, limit: int = 100, filter: str
+        self, db: Session, *, filter: str
     ) -> List[Article]:
         queryset = db.query(self.model)
         if filter:
@@ -32,8 +32,6 @@ class CRUDArticle(CRUDBase[Article, ArticleCreate, ArticleUpdate]):
             )
         return (
             queryset.order_by(Article.last_updated.desc(), Article.id.desc())
-            .offset(skip)
-            .limit(limit)
             .all()
         )
 
