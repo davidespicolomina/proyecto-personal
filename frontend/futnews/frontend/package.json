@@ -30,6 +30,7 @@
     "axios": "^0.21.1",
     "bulma": "^0.9.1",
     "prop-types": "^15.7.2",
-    "react-google-charts": "^3.0.15"
+    "react-google-charts": "^3.0.15",
+    "react-truncate": "^2.4.0"
   }
 }
