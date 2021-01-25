@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from "react";
 import 'bulma/css/bulma.css'
 import SearchTerm from "./SearchTerm";
-import SearchTermsService from "../services/SearchTermsService";
+import SearchTermsService from "../../services/SearchTermsService";
 
 class AddSearchTermForm extends Component {
 
@@ -30,6 +30,7 @@ class AddSearchTermForm extends Component {
     }
 
     render() {
+        const controlClass = `control${this.state.isLoading ? " is-loading": ""}`;
         return (
             <div className="field is-horizontal">
                 <div className="field-body">
@@ -40,7 +41,7 @@ class AddSearchTermForm extends Component {
                     </div>
                     <div className="field-body">
                         <div className="field">
-                            <div className="control">
+                            <div className={controlClass}>
                                 <button className="button is-primary" onClick={this.handleAddTerm}>
                                     Añadir
                                 </button>

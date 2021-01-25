@@ -2,7 +2,7 @@ import React, {Component, Fragment} from "react";
 import 'bulma/css/bulma.css'
 import PageTitle from "./common/PageTitle";
 import SearchTermsService from "../services/SearchTermsService";
-import SearchTermList from "./SearchTermList";
+import SearchTermList from "./searchTerms/SearchTermList";
 
 class ConfigPage extends Component {
     constructor(props) {

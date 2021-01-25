@@ -7,7 +7,7 @@ class SearchTermsList extends Component {
 
     renderSearchTerms = () => {
         return this.props.data.map(searchTerm =>
-            <SearchTerm key={searchTerm.id} data={searchTerm} />
+            <SearchTerm key={searchTerm.id} data={searchTerm} retrieveSearchTerms={this.props.retrieveSearchTerms} />
         );
     }
 
